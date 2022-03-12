@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Edit Product</h2>
+                <h2>Edit Test</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-primary" href="{{ route('tests.index') }}"> Back</a>
@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <form action="{{ route('tests.update',$product->id) }}" method="POST">
+    <form action="{{ route('tests.update',$test->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -32,13 +32,45 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $product->name }}" class="form-control" placeholder="Name">
+                    <input type="text" name="name" value="{{ $test->name }}" class="form-control" placeholder="Name">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Detail:</strong>
-                    <textarea class="form-control" style="height:150px" name="detail" placeholder="Detail">{{ $product->detail }}</textarea>
+                    <strong>Date:</strong>
+                    <input type="text" name="date" value="{{ $test->date }}" class="form-control" placeholder="Date">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Location:</strong>
+                    <input type="text" name="location" value="{{ $test->location }}" class="form-control"
+                           placeholder="Location">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Grade:</strong>
+                    <input type="number" name="grade" value="{{ $test->grade }}" class="form-control"
+                           placeholder="Grade">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Criterion:</strong>
+                    <input type="number" name="criterion" value="{{ $test->criterion }}" class="form-control"
+                           placeholder="Criterion">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Manager:</strong>
+                    <select class="form-control" name="user_id">
+                        @foreach($managers as $manager)
+                            <option value="{{ $manager->id }}"
+                                    @if($manager->id === $test->user_id) selected @endif>{{ $manager->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

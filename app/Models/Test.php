@@ -10,4 +10,10 @@ class Test extends Model
     use HasFactory;
 
     protected $fillable = [];
+    protected $guarded = ['_token'];
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

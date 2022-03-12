@@ -4,11 +4,11 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Products</h2>
+                <h2>Tests</h2>
             </div>
             <div class="pull-right">
-                @can('product-create')
-                    <a class="btn btn-success" href="{{ route('tests.create') }}"> Create New Product</a>
+                @can('test-create')
+                    <a class="btn btn-success" href="{{ route('tests.create') }}"> Create New Test</a>
                 @endcan
             </div>
         </div>
@@ -22,27 +22,33 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
             <th>Name</th>
-            <th>Details</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Grade</th>
+            <th>Criterion</th>
+            <th>Manager</th>
             <th width="280px">Action</th>
         </tr>
-        @foreach ($products as $product)
+        @foreach ($tests as $test)
             <tr>
-                <td>{{ ++$i }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->detail }}</td>
+                <td>{{ $test->name }}</td>
+                <td>{{ $test->date }}</td>
+                <td>{{ $test->location }}</td>
+                <td>{{ $test->grade }}</td>
+                <td>{{ $test->criterion }}</td>
+                <td>{{ $test->manager->name }}</td>
                 <td>
-                    <form action="{{ route('tests.destroy',$product->id) }}" method="POST">
-                        <a class="btn btn-info" href="{{ route('tests.show',$product->id) }}">Show</a>
-                        @can('product-edit')
-                            <a class="btn btn-primary" href="{{ route('tests.edit',$product->id) }}">Edit</a>
+                    <form action="{{ route('tests.destroy',$test->id) }}" method="POST">
+                        <a class="btn btn-info" href="{{ route('tests.show',$test->id) }}">Show</a>
+                        @can('test-edit')
+                            <a class="btn btn-primary" href="{{ route('tests.edit',$test->id) }}">Edit</a>
                         @endcan
 
 
                         @csrf
                         @method('DELETE')
-                        @can('product-delete')
+                        @can('test-delete')
                             <button type="submit" class="btn btn-danger">Delete</button>
                         @endcan
                     </form>
@@ -51,6 +57,6 @@
         @endforeach
     </table>
 
-    {!! $products->links() !!}
+    {!! $tests->links() !!}
 
 @endsection

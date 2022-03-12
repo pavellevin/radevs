@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Test;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Repositories\TestRepository;
+use App\Repositories\UserRepository;
+use App\Http\Requests\TestCreateRequest;
+use App\Http\Requests\TestUpdateRequest;
+
 
 class TestController extends Controller
 {
@@ -12,12 +18,18 @@ class TestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
+    private $testRepository;
+    private $userRepository;
+
+    function __construct(TestRepository $testRepository, UserRepository $userRepository)
     {
         $this->middleware('permission:test-list|test-create|test-edit|test-delete', ['only' => ['index','show']]);
         $this->middleware('permission:test-create', ['only' => ['create','store']]);
         $this->middleware('permission:test-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:test-delete', ['only' => ['destroy']]);
+
+        $this->testRepository = $testRepository;
+        $this->userRepository = $userRepository;
     }
     /**
      * Display a listing of the resource.
@@ -26,9 +38,9 @@ class TestController extends Controller
      */
     public function index()
     {
-        $products = Test::latest()->paginate(5);
-        return view('tests.index',compact('products'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        $tests = $this->testRepository->all();
+
+        return view('tests.index',compact('tests'));
     }
 
     /**
@@ -38,7 +50,9 @@ class TestController extends Controller
      */
     public function create()
     {
-        return view('tests.create');
+        $managers = $this->userRepository->getManagers();
+
+        return view('tests.create',compact('managers'));
     }
 
     /**
@@ -47,72 +61,64 @@ class TestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TestCreateRequest $request)
     {
-        request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ]);
-
-        Product::create($request->all());
+        $this->testRepository->create($request);
 
         return redirect()->route('tests.index')
-            ->with('success','Product created successfully.');
+            ->with('success','Test created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Test  $test
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Test $test)
     {
-        return view('tests.show',compact('product'));
+        return view('tests.show',compact('test'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Test $test
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Test $test)
     {
-        return view('tests.edit',compact('product'));
+        $managers = $this->userRepository->getManagers();
+
+        return view('tests.edit',compact(['test', 'managers']));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
+     * @param  \App\Test $test
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(TestUpdateRequest $request, Test $test)
     {
-        request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ]);
+        $this->testRepository->update($request, $test);
 
-        $product->update($request->all());
-
-        return redirect()->route('products.index')
-            ->with('success','Product updated successfully');
+        return redirect()->route('tests.index')
+            ->with('success','Test updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Test $test
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Test $test)
     {
-        $product->delete();
+        $this->testRepository->delete($test);
 
         return redirect()->route('products.index')
-            ->with('success','Product deleted successfully');
+            ->with('success','Test deleted successfully');
     }
 }
