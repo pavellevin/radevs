@@ -10,6 +10,10 @@ class RoleRepository
     {
         return Role::orderBy('id','DESC')->paginate(5);
     }
+    public function getRoles()
+    {
+        return Role::pluck('name','name')->all();
+    }
 
     public function create($request)
     {
