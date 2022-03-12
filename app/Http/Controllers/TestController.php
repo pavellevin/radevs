@@ -118,7 +118,7 @@ class TestController extends Controller
     {
         $this->testRepository->delete($test);
 
-        return redirect()->route('products.index')
+        return redirect()->route('tests.index')
             ->with('success','Test deleted successfully');
     }
 }

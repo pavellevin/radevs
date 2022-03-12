@@ -32,46 +32,89 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $test->name }}" class="form-control" placeholder="Name">
+                    @if(Auth::user()->isAdmin())
+                        <input type="text" name="name" value="{{ $test->name }}" class="form-control"
+                               placeholder="Name">
+                    @else
+                        <input type="hidden" name="name" value="{{ $test->name }}" class="form-control"
+                               placeholder="Name">
+                        {{ $test->name }}
+                    @endif
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Date:</strong>
-                    <input type="text" name="date" value="{{ $test->date }}" class="form-control" placeholder="Date">
+                    @if(Auth::user()->isAdmin())
+                        <input type="text" name="date" value="{{ $test->date }}" class="form-control"
+                               placeholder="Date">
+                    @else
+                        <input type="hidden" name="date" value="{{ $test->date }}" class="form-control"
+                               placeholder="Date">
+                        {{ $test->date }}
+                    @endif
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Location:</strong>
-                    <input type="text" name="location" value="{{ $test->location }}" class="form-control"
-                           placeholder="Location">
+                    @if(Auth::user()->isAdmin())
+                        <input type="text" name="location" value="{{ $test->location }}" class="form-control"
+                               placeholder="Location">
+                    @else
+                        <input type="hidden" name="location" value="{{ $test->location }}" class="form-control"
+                               placeholder="Location">
+                        {{ $test->location }}
+                    @endif
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Grade:</strong>
-                    <input type="number" name="grade" value="{{ $test->grade }}" class="form-control"
-                           placeholder="Grade">
+                    @if(Auth::user()->isAdmin() || (Auth::user()->isManager() && $test->isModerate()))
+                        <input type="number" name="grade" value="{{ $test->grade }}" class="form-control"
+                               placeholder="Grade">
+                    @else
+                        {{ $test->grade }} (this test closed for moderate)
+                    @endif
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Criterion:</strong>
-                    <input type="number" name="criterion" value="{{ $test->criterion }}" class="form-control"
-                           placeholder="Criterion">
+                    @if(Auth::user()->isAdmin())
+                        <input type="number" name="criterion" value="{{ $test->criterion }}" class="form-control"
+                               placeholder="Criterion">
+                    @else
+                        <input type="hidden" name="criterion" value="{{ $test->criterion }}" class="form-control"
+                               placeholder="Criterion">
+                        {{ $test->criterion }}
+                    @endif
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Manager:</strong>
+
                     <select class="form-control" name="user_id">
-                        @foreach($managers as $manager)
-                            <option value="{{ $manager->id }}"
-                                    @if($manager->id === $test->user_id) selected @endif>{{ $manager->name }}</option>
-                        @endforeach
+                        @if(Auth::user()->isAdmin())
+                            @foreach($managers as $manager)
+                                <option value="{{ $manager->id }}"
+                                        @if($manager->id === $test->user_id) selected @endif>{{ $manager->name }}</option>
+                            @endforeach
+                        @else
+                            <option value="{{ $test->manager->id }}">{{ $test->manager->name }}</option>
+                        @endif
+
                     </select>
                 </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                @if(Auth::user()->isAdmin())
+                    <strong>Moderate:</strong>
+                    <input type="hidden" name="is_moderate" value="0">
+                    <input type="checkbox" value="1" name="is_moderate" @if($test->isModerate()) checked @endif ">
+                @endif
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Submit</button>

@@ -16,4 +16,9 @@ class Test extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function isModerate()
+    {
+        return $this->is_moderate === 1;
+    }
 }

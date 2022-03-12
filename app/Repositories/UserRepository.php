@@ -60,7 +60,7 @@ class UserRepository
     public function getManagers()
     {
         return User::all()->filter(function ($user) {
-            if ($user->hasRole('Manager')) {
+            if ($user->isManager()) {
                 return $user;
             }
         });

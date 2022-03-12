@@ -67,6 +67,12 @@
                     </select>
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <strong>Moderate:</strong>
+                <input type="hidden" name="is_moderate" value="0">
+                <input type="checkbox" value="1" name="is_moderate">
+            </div>
+
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
