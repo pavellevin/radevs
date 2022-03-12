@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Test;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class ProductController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
-        $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:test-list|test-create|test-edit|test-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:test-create', ['only' => ['create','store']]);
+        $this->middleware('permission:test-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:test-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -26,8 +26,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(5);
-        return view('products.index',compact('products'))
+        $products = Test::latest()->paginate(5);
+        return view('tests.index',compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -38,7 +38,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        return view('tests.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductController extends Controller
 
         Product::create($request->all());
 
-        return redirect()->route('products.index')
+        return redirect()->route('tests.index')
             ->with('success','Product created successfully.');
     }
 
@@ -68,7 +68,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.show',compact('product'));
+        return view('tests.show',compact('product'));
     }
 
     /**
@@ -79,7 +79,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit',compact('product'));
+        return view('tests.edit',compact('product'));
     }
 
     /**
