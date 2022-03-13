@@ -1,48 +1,100 @@
 @extends('layouts.app')
 
-@section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Role Management</h2>
+@section('main')
+
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <h3>Roles List</h3>
+            <p class="mb-2">
+                A role provided access to predefined menus and features so that depending <br/>
+                on assigned role an administrator can have access to what he need
+            </p>
+
+            <!-- Role cards -->
+            <div class="row">
+                @foreach($roles as $role)
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <span>Total {{ count($role->users) }} users</span>
+                                    <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                                        @foreach($role->users as $user)
+                                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
+                                                data-bs-placement="top"
+                                                title="{{ $user->name }}" class="avatar avatar-sm pull-up">
+                                                <img class="rounded-circle"
+                                                     src="../../../app-assets/images/avatars/2.png"
+                                                     alt="Avatar"/>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
+                                    <div class="role-heading">
+                                        <h4 class="fw-bolder">{{ $role->name }}</h4>
+                                        <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
+                                           data-bs-target="#addRoleModal">
+                                            <small class="fw-bolder">Edit Role</small>
+                                        </a>
+                                    </div>
+                                    <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
+                                                                                       class="font-medium-5"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-            <div class="pull-right">
-                @can('role-create')
-                    <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
-                @endcan
+            <!--/ Role cards -->
+
+            <h3 class="mt-50">Total users with their roles</h3>
+            <p class="mb-2">Find all of your company’s administrator accounts and their associate roles.</p>
+            <!-- table -->
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="user-list-table table">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Email</th>
+                            <th>Created_at</th>
+                        </tr>
+                        </thead>
+                        @foreach($users as $user)
+                            <tr>
+                                <td>
+                                    {{ $user->name }}
+                                </td>
+                                <td>
+                                    @if(!empty($user->getRoleNames()))
+                                        @foreach($user->getRoleNames() as $role)
+                                            {{ $role }}
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ $user->email }}
+                                </td>
+                                <td>
+                                    {{ $user->created_at }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             </div>
+            <!-- table -->
+            <!-- Add Role Modal -->
+        @include('roles.modals.add_role')
+        <!--/ Add Role Modal -->
+
         </div>
     </div>
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
-    <table class="table table-bordered">
-        <tr>
-            <th>Name</th>
-            <th width="280px">Action</th>
-        </tr>
-        @foreach ($roles as $key => $role)
-            <tr>
-                <td>{{ $role->name }}</td>
-                <td>
-                    <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
-                    @can('role-edit')
-                        <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
-                    @endcan
-                    @can('role-delete')
-                        {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::close() !!}
-                    @endcan
-                </td>
-            </tr>
-        @endforeach
-    </table>
-
-    {!! $roles->render() !!}
-
-@endsection
+@stop

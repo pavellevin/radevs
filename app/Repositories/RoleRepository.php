@@ -8,7 +8,7 @@ class RoleRepository
 {
     public function all()
     {
-        return Role::orderBy('id','DESC')->paginate(5);
+        return Role::with('users')->orderBy('id','DESC')->paginate(5);
     }
     public function getRoles()
     {

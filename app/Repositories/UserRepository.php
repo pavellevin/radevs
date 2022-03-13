@@ -13,7 +13,7 @@ class UserRepository
 {
     public function all()
     {
-        return User::orderBy('id', 'DESC')->paginate(5);
+        return User::orderBy('id', 'DESC')->get();
     }
 
     public function getRoles()

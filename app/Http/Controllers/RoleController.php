@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Repositories\UserRepository;
 use Spatie\Permission\Models\Role;
 use App\Repositories\RoleRepository;
 use App\Repositories\PermissionRepository;
@@ -19,8 +20,9 @@ class RoleController extends Controller
      */
     private $roleRepository;
     private $permissionRepository;
+    private $userRepository;
 
-    function __construct(RoleRepository $roleRepository, PermissionRepository $permissionRepository)
+    function __construct(RoleRepository $roleRepository, PermissionRepository $permissionRepository, UserRepository $userRepository)
     {
         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
         $this->middleware('permission:role-create', ['only' => ['create','store']]);
@@ -29,6 +31,7 @@ class RoleController extends Controller
 
         $this->roleRepository = $roleRepository;
         $this->permissionRepository = $permissionRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -39,8 +42,9 @@ class RoleController extends Controller
     public function index()
     {
         $roles = $this->roleRepository->all();
+        $users = $this->userRepository->all();
 
-        return view('roles.index',compact('roles'));
+        return view('roles.index',compact('roles', 'users'));
     }
 
     /**
