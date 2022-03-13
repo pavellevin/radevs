@@ -15,6 +15,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('roles.modals.add_role', 'App\Http\ViewComposers\RoleComposer');
+        View::composer('users.modals.add_user', 'App\Http\ViewComposers\UserComposer');
     }
 
     /**
