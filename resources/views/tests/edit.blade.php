@@ -81,19 +81,6 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Criterion:</strong>
-                    @if(Auth::user()->isAdmin())
-                        <input type="number" name="criterion" value="{{ $test->criterion }}" class="form-control"
-                               placeholder="Criterion">
-                    @else
-                        <input type="hidden" name="criterion" value="{{ $test->criterion }}" class="form-control"
-                               placeholder="Criterion">
-                        {{ $test->criterion }}
-                    @endif
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
                     <strong>Manager:</strong>
 
                     <select class="form-control" name="user_id">

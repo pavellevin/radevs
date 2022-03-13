@@ -28,7 +28,6 @@ class TestUpdateRequest extends FormRequest
             'date' => 'required',
             'location' => 'required',
             'grade' => 'required',
-            'criterion' => 'required',
             'user_id' => 'required',
         ];
     }

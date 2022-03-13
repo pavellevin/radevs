@@ -53,12 +53,6 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Criterion:</strong>
-                    <input type="number" name="criterion" class="form-control" placeholder="Criterion">
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
                     <strong>Manager:</strong>
                     <select class="form-control" name="user_id">
                         @foreach($managers as $manager)
