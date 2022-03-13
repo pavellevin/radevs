@@ -30,12 +30,7 @@
                 <!-- list and filter start -->
                 <div class="card">
                     <div class="card-body border-bottom">
-                        <h4 class="card-title">Search & Filter</h4>
-                        <div class="row">
-                            <div class="col-md-4 user_role"></div>
-                            <div class="col-md-4 user_plan"></div>
-                            <div class="col-md-4 user_status"></div>
-                        </div>
+                        <h4 class="card-title">Users</h4>
                     </div>
                     <div class="card-datatable table-responsive pt-0">
                         <table class="user-list-table table">
@@ -45,6 +40,7 @@
                                 <th>Role</th>
                                 <th>Email</th>
                                 <th>Created_at</th>
+                                <th width="400px">Action</th>
                             </tr>
                             </thead>
                             @foreach($users as $user)
@@ -64,6 +60,22 @@
                                     </td>
                                     <td>
                                         {{ $user->created_at }}
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('tests.destroy',$user->id) }}" method="POST">
+                                            @can('user-edit')
+                                                <a class="btn btn-primary" href="{{ route('tests.edit',$user->id) }}">Edit</a>
+                                            @endcan
+
+                                            @csrf
+                                            @method('DELETE')
+                                            @can('user-delete')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            @endcan
+                                            @can('user-create')
+                                                <button class="dt-button add-new btn btn-info" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-bs-toggle="modal" data-bs-target="#modals-slide-in"><span>Add New User</span></button>
+                                            @endcan
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -117,8 +129,4 @@
     <script src="{{asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
     <script src="{{asset('app-assets/vendors/js/forms/cleave/cleave.min.js')}}"></script>
     <script src="{{asset('app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js')}}"></script>
-@endsection
-
-@section('page_js')
-    <script src="{{asset('app-assets/js/scripts/pages/app-user-list.js')}}"></script>
 @endsection

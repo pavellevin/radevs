@@ -30,47 +30,51 @@
                 <!-- list and filter start -->
                 <div class="card">
                     <div class="card-body border-bottom">
-                        <h4 class="card-title">Search & Filter</h4>
-                        <div class="row">
-                            <div class="col-md-4 user_role"></div>
-                            <div class="col-md-4 user_plan"></div>
-                            <div class="col-md-4 user_status"></div>
-                        </div>
+                        <h4 class="card-title">Tests</h4>
                     </div>
                     <div class="card-datatable table-responsive pt-0">
                         <table class="user-list-table table">
                             <thead class="table-light">
                             <tr>
                                 <th>Name</th>
-                                <th>Role</th>
-                                <th>Email</th>
-                                <th>Created_at</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Grade</th>
+                                <th>Criterion</th>
+                                <th>Manager</th>
+                                <th width="400px">Action</th>
                             </tr>
                             </thead>
                             @foreach($tests as $test)
                                 <tr>
+                                    <td>{{ $test->name }}</td>
+                                    <td>{{ $test->date }}</td>
+                                    <td>{{ $test->location }}</td>
+                                    <td>{{ $test->grade }}</td>
+                                    <td>{{ $test->criterion }}</td>
+                                    <td>{{ $test->manager->name }}</td>
                                     <td>
-                                        {{ $test->name }}
-                                    </td>
-                                    <td>
-                                        @if(!empty($user->getRoleNames()))
-                                            @foreach($user->getRoleNames() as $role)
-                                                {{ $role }}
-                                            @endforeach
-                                        @endif
-                                    </td>
-                                    <td>
-                                        {{ $user->email }}
-                                    </td>
-                                    <td>
-                                        {{ $user->created_at }}
+                                        <form action="{{ route('tests.destroy',$test->id) }}" method="POST">
+                                            @can('test-edit')
+                                                <a class="btn btn-primary" href="{{ route('tests.edit',$test->id) }}">Edit</a>
+                                            @endcan
+
+                                            @csrf
+                                            @method('DELETE')
+                                            @can('test-delete')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            @endcan
+                                            @can('test-create')
+                                                <button class="dt-button add-new btn btn-info" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-bs-toggle="modal" data-bs-target="#modals-slide-in"><span>Add New Test</span></button>
+                                            @endcan
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
                         </table>
                     </div>
                     <!-- Modal to add new user starts-->
-                    @include('users.modals.add_user')
+                    @include('tests.modals.add_test')
                     <!-- Modal to add new user Ends-->
                 </div>
                 <!-- list and filter end -->
@@ -117,8 +121,4 @@
     <script src="{{asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
     <script src="{{asset('app-assets/vendors/js/forms/cleave/cleave.min.js')}}"></script>
     <script src="{{asset('app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js')}}"></script>
-@endsection
-
-@section('page_js')
-    <script src="{{asset('app-assets/js/scripts/pages/app-user-list.js')}}"></script>
 @endsection
