@@ -778,3 +778,25 @@
     <!-- END: Content-->
 
 @stop
+
+@section('vendor_css')
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/charts/apexcharts.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/toastr.min.css')}}">
+@endsection
+
+@section('page_css')
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/core/menu/menu-types/vertical-menu.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/dashboard-ecommerce.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/charts/chart-apex.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-toastr.css')}}">
+@endsection
+
+@section('page_vendor_js')
+    <script src="{{asset('app-assets/vendors/js/charts/apexcharts.min.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/extensions/toastr.min.js')}}"></script>
+@endsection
+
+@section('page_js')
+    <script src="{{asset('app-assets/js/scripts/pages/dashboard-ecommerce.js')}}"></script>
+@endsection

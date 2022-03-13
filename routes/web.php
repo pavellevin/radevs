@@ -20,7 +20,7 @@ use App\Http\Controllers\TestController;
 
 Route::get('/', function () {
     return view('main');
-});
+})->name('main');
 
 Auth::routes();
 

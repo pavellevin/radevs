@@ -32,9 +32,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = $this->userRepository->all();
+        $users = $this->userRepository->all();
 
-        return view('users.index',compact('data'));
+        return view('users.index',compact('users'));
     }
 
     /**
