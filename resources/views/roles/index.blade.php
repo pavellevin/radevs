@@ -39,7 +39,7 @@
                                         <h4 class="fw-bolder">{{ $role->name }}</h4>
                                         <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
                                            data-bs-target="#addRoleModal">
-                                            <small class="fw-bolder">Edit Role</small>
+                                            <small class="fw-bolder">Add Role</small>
                                         </a>
                                     </div>
                                     <a href="javascript:void(0);" class="text-body"><i data-feather="copy"
