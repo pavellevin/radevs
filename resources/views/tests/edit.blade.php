@@ -10,7 +10,7 @@
 
         {!! Form::open(array('route' => ['tests.update', $test->id],'method'=>'PUT', 'class' => 'add-new-user modal-content pt-0')) !!}
             <div class="modal-header mb-1">
-                <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Test</h5>
             </div>
             <div class="modal-body flex-grow-1">
                 <div class="mb-1">
