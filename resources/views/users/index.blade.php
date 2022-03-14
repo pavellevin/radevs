@@ -40,7 +40,7 @@
                                 <th>Role</th>
                                 <th>Email</th>
                                 <th>Created_at</th>
-                                <th width="400px">Action</th>
+                                <th width="500px">Action</th>
                             </tr>
                             </thead>
                             @foreach($users as $user)
@@ -62,9 +62,10 @@
                                         {{ $user->created_at }}
                                     </td>
                                     <td>
-                                        <form action="{{ route('tests.destroy',$user->id) }}" method="POST">
+                                        <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+                                            <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
                                             @can('user-edit')
-                                                <a class="btn btn-primary" href="{{ route('tests.edit',$user->id) }}">Edit</a>
+                                                <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
                                             @endcan
 
                                             @csrf
@@ -96,19 +97,9 @@
 @stop
 
 @section('vendor_css')
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/forms/select/select2.min.css')}}">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')}}">
+    @include('users.partials.vendor_css')
 @endsection
 
 @section('page_vendor_js')
-    <script src="{{asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/jszip.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/pdfmake.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/vfs_fonts.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/buttons.html5.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/forms/cleave/cleave.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js')}}"></script>
+    @include('users.partials.page_vendor_js')
 @endsection

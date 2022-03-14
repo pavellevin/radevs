@@ -1,0 +1,9 @@
+<script src="{{asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/tables/datatable/jszip.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/tables/datatable/pdfmake.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/tables/datatable/vfs_fonts.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/tables/datatable/buttons.html5.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/forms/cleave/cleave.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js')}}"></script>

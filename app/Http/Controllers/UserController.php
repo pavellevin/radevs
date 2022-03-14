@@ -82,10 +82,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = $this->roleRepository->getRoles();
-        $userRole = $this->userRepository->getRolesForUser($user);
+        $roles = $this->userRepository->getRoles();
 
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('users.edit',compact('user','roles'));
     }
 
     /**
