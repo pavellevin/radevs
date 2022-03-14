@@ -42,7 +42,7 @@
                                 <th>Grade</th>
                                 <th>Criterion</th>
                                 <th>Manager</th>
-                                <th width="400px">Action</th>
+                                <th width="500px">Action</th>
                             </tr>
                             </thead>
                             @foreach($tests as $test)
@@ -55,7 +55,8 @@
                                     <td>{{ $test->manager->name }}</td>
                                     <td>
                                         <form action="{{ route('tests.destroy',$test->id) }}" method="POST">
-                                            @can('test-edit')
+                                            <a class="btn btn-info" href="{{ route('tests.show',$test->id) }}">Show</a>
+                                           @can('test-edit')
                                                 <a class="btn btn-primary" href="{{ route('tests.edit',$test->id) }}">Edit</a>
                                             @endcan
 
@@ -88,19 +89,9 @@
 @stop
 
 @section('vendor_css')
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/forms/select/select2.min.css')}}">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')}}">
+    @include('tests.partials.vendor_css')
 @endsection
 
 @section('page_vendor_js')
-    <script src="{{asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/jszip.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/pdfmake.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/vfs_fonts.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/buttons.html5.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/forms/cleave/cleave.min.js')}}"></script>
-    <script src="{{asset('app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js')}}"></script>
+    @include('tests.partials.page_vendor_js')
 @endsection
